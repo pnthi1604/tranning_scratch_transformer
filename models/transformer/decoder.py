@@ -53,10 +53,6 @@ class Decoder(nn.Module):
             )
 
         for idx, decoder_layer in enumerate(self.layers):
-            if self.training:
-                dropout_probability = torch.rand([])
-                if dropout_probability < self.layerdrop:
-                    continue
             layer_outputs = decoder_layer(
                 hidden_states=hidden_states,
                 attention_mask=attention_mask,

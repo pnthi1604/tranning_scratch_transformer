@@ -16,9 +16,11 @@ models = {
 }
 
 def get_model(
-    model_name: str,
     **kwargs,
 ):
+    model_name = kwargs.get("model_name", None)
+    if model_name is None:
+        raise ValueError("model_name is required.")
     return models[model_name]["model"](
         config=models[model_name]["config"](
             **kwargs,

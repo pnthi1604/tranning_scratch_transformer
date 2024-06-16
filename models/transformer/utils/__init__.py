@@ -7,8 +7,8 @@ from .mask import (
 )
 
 from .out_form import (
-    BartEncoderOut,
-    BartDecoderOut,
+    EncoderOut,
+    DecoderOut,
 )
 
 from .init_weights import (

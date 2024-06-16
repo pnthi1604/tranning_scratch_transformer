@@ -58,7 +58,6 @@ def train(config):
 
     # get model
     model = get_model(
-        model_name=config["model_name"],
         **config,
     ).to(device)
 
@@ -150,6 +149,8 @@ def train(config):
 
     i = 0
     while global_step < config["num_steps"]:
+        # debug
+        break
         torch.cuda.empty_cache()
         # train
         sum_loss_train = 0

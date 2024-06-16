@@ -25,7 +25,7 @@ class Encoder(nn.Module):
         self.apply(lambda module: _init_weights(
             module=module,
             init_type=config.init_type,
-            init_mean=config.init_mean,
+            mean=config.init_mean,
             std=config.init_std,
         ))
 

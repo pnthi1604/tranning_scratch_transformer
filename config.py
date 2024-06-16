@@ -4,6 +4,9 @@ from .utils.optimizers import (
     ADAMW,
     RADAM,
 )
+from .models.utils import (
+    SEQ2SEQ_TRANSFORMER,
+)
 
 def get_config(base_dir: str=None):
     config = {}
@@ -62,7 +65,7 @@ def get_config(base_dir: str=None):
     config["seed"] = 42
 
     # Train
-    config["model_name"] = "bart"
+    config["model_name"] = SEQ2SEQ_TRANSFORMER
     config["step_train"] = None
     config["preload"] = "latest"
     config["pretrain"] = False
@@ -76,7 +79,7 @@ def get_config(base_dir: str=None):
     config["num_steps"] = 15000
     config["val_steps"] = config["num_steps"] // 5
 
-    # BART config model
+    # config model
     config["d_model"] = 768
     config["encoder_layers"] = 6
     config["decoder_layers"] = 6

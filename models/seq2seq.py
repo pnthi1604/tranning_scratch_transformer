@@ -80,7 +80,7 @@ class TransformerSeq2seq(nn.Module):
             _init_weights(
                 module=module,
                 init_type=config.init_type,
-                init_std=config.init_std,
+                std=config.init_std,
                 mean=config.init_mean,
             )
         

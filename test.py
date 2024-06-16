@@ -44,7 +44,6 @@ def test(config):
 
     # get model
     model = get_model(
-        model_name=config["model_name"],
         **config,
     ).to(device)
         
