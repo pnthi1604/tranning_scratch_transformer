@@ -139,7 +139,6 @@ def validate(
                         )
                         precision = precision.item()
                         print(f"{precision = }")
-
             
         labels = torch.cat(labels, dim=0)
         preds = torch.cat(preds, dim=0)
