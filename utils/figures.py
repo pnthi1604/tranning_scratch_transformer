@@ -60,6 +60,27 @@ def draw_multi_graph(
     except Exception as e:
         print(e)
 
+def calc_avg_data(
+    all_data: list,
+    time_steps: int,
+    separate_num: int,
+):
+    avg_data = []
+    avg_time_steps = []
+    cnt, sum_data_val = 0, 0
+    for i in range(len(all_data)):
+        data = all_data[i]
+        time_step = time_steps[i]
+        
+        sum_data_val += data
+        cnt += 1
+        if cnt % separate_num == 0:
+            avg_data.append(sum_data_val / separate_num)
+            avg_time_steps.append(time_step)
+            cnt, sum_data_val = 0, 0
+
+    return avg_data, avg_time_steps
+
 def figure_list_to_csv(
     config: dict,
     column_names: list,
@@ -136,4 +157,5 @@ __all__ = [
     "save_model",
     "save_config",
     "zip_directory",
+    "calc_avg_data",
 ]

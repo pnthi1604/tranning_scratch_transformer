@@ -17,7 +17,7 @@ from .transformer.utils.init_weights import (
 class TransformerSeq2seqConfig(TransformerConfig):
     def __init__(
         self,
-        pad_token_id: int = 2,
+        pad_token_id: int = None,
         shared_embed: bool = False,
         **kwargs,
     ):

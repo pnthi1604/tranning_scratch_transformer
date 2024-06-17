@@ -54,7 +54,7 @@ def train(config):
     )
     config["src_vocab_size"] = tokenizer_src.get_vocab_size()
     config["tgt_vocab_size"] = tokenizer_tgt.get_vocab_size()
-    config["pad_idx"] = tokenizer_src.token_to_id("<pad>")
+    config["pad_token_id"] = tokenizer_src.token_to_id("<pad>")
 
     # get model
     model = get_model(
@@ -193,12 +193,16 @@ def train(config):
             if i % step_accumulation == 0:
                 global_step += 1
                 current_lr = optimizer.param_groups[0]['lr']
-                learning_rate_step.append(current_lr)
-                timestep_lr.append(global_step)
-
-                # loss = loss_fn(logits.view(-1, tokenizer_tgt.get_vocab_size()), label.view(-1))
-                losses_train_step.append(loss.item())
-                timestep_train.append(global_step)
+                if global_step <= len(learning_rate_step) - 1:
+                    learning_rate_step[global_step - 1] = current_lr
+                    timestep_lr[global_step - 1] = global_step
+                    losses_train_step[global_step - 1] = loss.item()
+                    timestep_train[global_step - 1] = global_step
+                else:
+                    learning_rate_step.append(current_lr)
+                    timestep_lr.append(global_step)
+                    losses_train_step.append(loss.item())
+                    timestep_train.append(global_step)
 
                 batch_iterator.set_postfix({
                     "loss": f"{loss.item():6.3f}",
@@ -237,17 +241,21 @@ def train(config):
                             # loss = loss_fn(logits.view(-1, tokenizer_tgt.get_vocab_size()), label.view(-1))
                             sum_loss_val += loss.item()
                             cnt_update_loss_val += 1
-                            losses_val_step.append(loss.item())
-                            timestep_val.append(global_val_step)
+                            if global_val_step <= len(losses_val_step) - 1:
+                                losses_val_step[global_val_step - 1] = loss.item()
+                                timestep_val[global_val_step - 1] = global_val_step
+                            else:
+                                losses_val_step.append(loss.item())
+                                timestep_val.append(global_val_step)
                             
                     losses_train.append(sum_loss_train / cnt_update_loss_train)
                     losses_val.append(sum_loss_val / cnt_update_loss_val)
+                    timestep_train_and_val.append(global_step)
                     sum_loss_train = 0
                     sum_loss_val = 0
                     cnt_update_loss_train = 0
                     cnt_update_loss_val = 0
 
-                    timestep_train_and_val.append(global_step)
 
     # save model
     save_model(

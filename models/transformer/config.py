@@ -1,7 +1,4 @@
 import torch
-from .utils import (
-    XAVIER_UNIFORM,
-)
 
 class TransformerConfig:
     def __init__(
@@ -20,7 +17,7 @@ class TransformerConfig:
         attention_dropout: float = 0.0,
         activation_dropout: float = 0.0,
         max_position_embeddings: int = 1024,
-        init_type: str = XAVIER_UNIFORM,
+        init_type: str = None,
         init_std: float = 0.02,
         init_mean: float = 0.0,
         label_smoothing: float = 0.01,

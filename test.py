@@ -24,7 +24,7 @@ def test(config):
     )
     config["src_vocab_size"] = tokenizer_src.get_vocab_size()
     config["tgt_vocab_size"] = tokenizer_tgt.get_vocab_size()
-    config["pad_idx"] = tokenizer_src.token_to_id("<pad>")
+    config["pad_token_id"] = tokenizer_src.token_to_id("<pad>")
 
     # get dataloader
     train_dataloader, val_dataloader, test_dataloader = get_dataloader(
